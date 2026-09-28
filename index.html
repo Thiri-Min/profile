@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alex Morgan | Full Stack Developer</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts - Inter & Fira Code -->
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+            --accent-cyan: #06b6d4;
+            --accent-purple: #8b5cf6;
+            --bg-dark: #0f172a;
+            --card-dark: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        [data-bs-theme="light"] {
+            --bg-dark: #f8fafc;
+            --card-dark: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border-color: rgba(0, 0, 0, 0.08);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        code, .font-mono {
+            font-family: 'Fira Code', monospace;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-dark);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-purple);
+        }
+
+        /* Glassmorphism effects */
+        .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+        }
+
+        [data-bs-theme="light"] .glass-card {
+            background: rgba(255, 255, 255, 0.85);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        /* Navigation */
+        .navbar {
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            background: rgba(15, 23, 42, 0.85) !important;
+            border-bottom: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        [data-bs-theme="light"] .navbar {
+            background: rgba(248, 250, 252, 0.85) !important;
+        }
+
+        .navbar-brand span {
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            color: var(--text-muted) !important;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--text-main) !important;
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 8px;
+            right: 8px;
+            height: 2px;
+            background: var(--primary-gradient);
+            border-radius: 2px;
+        }
+
+        /* Hero Carousel Section */
+        .hero-section {
+            min-height: 100vh;
+            padding-top: 80px;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-bg-glow {
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, rgba(168, 85, 247, 0.1) 40%, rgba(0,0,0,0) 70%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .profile-img-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .profile-img {
+            width: 260px;
+            height: 260px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        .profile-glow {
+            position: absolute;
+            top: -6px;
+            left: -6px;
+            right: -6px;
+            bottom: -6px;
+            background: var(--primary-gradient);
+            border-radius: 50%;
+            z-index: 1;
+            filter: blur(10px);
+            opacity: 0.8;
+            animation: pulse-glow 4s infinite alternate;
+        }
+
+        @keyframes pulse-glow {
+            0% { transform: scale(0.98); opacity: 0.6; }
+            100% { transform: scale(1.03); opacity: 0.9; }
+        }
+
+        /* Typing cursor */
+        .typed-cursor {
+            color: var(--accent-cyan);
+            animation: blink 0.7s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* Carousel customization */
+        .hero-carousel .carousel-item {
+            min-height: 280px;
+        }
+
+        /* Gradient Text */
+        .text-gradient {
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Custom Buttons */
+        .btn-gradient {
+            background: var(--primary-gradient);
+            color: #fff;
+            border: none;
+            font-weight: 600;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .btn-gradient:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(168, 85, 247, 0.3);
+            color: #fff;
+        }
+
+        .btn-outline-custom {
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            background: rgba(255, 255, 255, 0.05);
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .btn-outline-custom:hover {
+            background: var(--text-main);
+            color: var(--bg-dark);
+            border-color: var(--text-main);
+        }
+
+        /* Stats Cards */
+        .stat-card {
+            border-left: 3px solid var(--accent-purple);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-50px);
+        }
+
+        /* Skills badges and progress */
+        .skill-card {
+            transition: all 0.3s ease;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-purple);
+        }
+
+        /* Portfolio Filter Badges */
+        .filter-btn {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            border-radius: 30px;
+            padding: 8px 20px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--primary-gradient);
+            color: white;
+            border-color: transparent;
+        }
+
+        /* Portfolio Project Cards */
+        .project-card {
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+        }
+
+        .project-img-wrapper {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-img-wrapper img {
+            transition: transform 0.5s ease;
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .project-card:hover .project-img-wrapper img {
+            transform: scale(1.08);
+        }
+
+        .project-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(15, 23, 42, 0.85);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .project-card:hover .project-overlay {
+            opacity: 1;
+        }
+
+        /* Timeline */
+        .timeline-container {
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .timeline-container::before {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border-color);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 40px;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -30px;
+            top: 5px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--accent-cyan);
+            border: 3px solid var(--bg-dark);
+            box-shadow: 0 0 10px var(--accent-cyan);
+        }
+
+        /* Floating theme switch */
+        .theme-toggle-btn {
+            cursor: pointer;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border-color);
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-main);
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle-btn:hover {
+            transform: rotate(30deg);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Section Title Styling */
+        .section-title {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 2.5rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: var(--primary-gradient);
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg fixed-top py-3" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand fw-bold fs-4 font-mono" href="#home">
+                &lt;<span>AlexMorgan</span> /&gt;
+            </a>
+            <button class="navbar-toggler border-0 text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fas fa-bars fs-4"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center gap-lg-3 my-3 my-lg-0">
+                    <li class="nav-item"><a class="nav-link active" href="#home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#experience">Experience</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                    <li class="nav-item ms-lg-2">
+                        <button class="theme-toggle-btn" id="themeToggle" title="Toggle Light/Dark Theme">
+                            <i class="fas fa-moon" id="themeIcon"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero / Main Section with Carousel Slide -->
+    <section id="home" class="hero-section">
+        <div class="hero-bg-glow"></div>
+        <div class="container relative-z">
+            <div class="row align-items-center gy-5">
+                <!-- Left Side: Interactive Content & Carousel -->
+                <div class="col-lg-7 order-2 order-lg-1">
+                    <div class="badge px-3 py-2 rounded-pill bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 mb-3 font-mono">
+                        👋 Welcome to my digital workspace
+                    </div>
+                    
+                    <!-- Hero Carousel -->
+                    <div id="heroCarousel" class="carousel slide hero-carousel" data-bs-ride="carousel" data-bs-interval="4000">
+                        <div class="carousel-inner">
+                            
+                            <!-- Slide 1 -->
+                            <div class="carousel-item active">
+                                <h1 class="display-3 fw-extrabold mb-3">
+                                    Hi, I'm Alex. <br>
+                                    <span class="text-gradient">Full Stack Developer</span>
+                                </h1>
+                                <p class="lead text-muted fs-5 mb-4">
+                                    Architecting end-to-end web applications with sleek frontend interfaces and resilient cloud-native backends.
+                                </p>
+                            </div>
+
+                            <!-- Slide 2 -->
+                            <div class="carousel-item">
+                                <h1 class="display-3 fw-extrabold mb-3">
+                                    Crafting <br>
+                                    <span class="text-gradient">Intuitive UI/UX</span>
+                                </h1>
+                                <p class="lead text-muted fs-5 mb-4">
+                                    Bridging the gap between complex functionality and user-centered minimalist design systems.
+                                </p>
+                            </div>
+
+                            <!-- Slide 3 -->
+                            <div class="carousel-item">
+                                <h1 class="display-3 fw-extrabold mb-3">
+                                    Scaling <br>
+                                    <span class="text-gradient">Cloud & DevOps</span>
+                                </h1>
+                                <p class="lead text-muted fs-5 mb-4">
+                                    Automating CI/CD pipelines, containerizing services, and deploying high-availability microservices.
+                                </p>
+                            </div>
+
+                        </div>
+
+                        <!-- Carousel Indicators -->
+                        <div class="carousel-indicators position-static justify-content-start my-3">
+                            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                        </div>
+                    </div>
+
+                    <!-- Dynamic Typed Text Tagline -->
+                    <div class="font-mono mb-4 text-muted fs-6">
+                        <span class="text-primary">&gt;</span> Specializing in: <span id="typedText" class="text-main fw-bold"></span><span class="typed-cursor">|</span>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="d-flex flex-wrap gap-3 pt-2">
+                        <a href="#projects" class="btn btn-gradient px-4 py-3 rounded-3">
+                            <i class="fas fa-rocket me-2"></i>View Projects
+                        </a>
+                        <a href="#contact" class="btn btn-outline-custom px-4 py-3 rounded-3">
+                            <i class="fas fa-envelope me-2"></i>Contact Me
+                        </a>
+                        <a href="#" class="btn btn-outline-custom px-3 py-3 rounded-3" title="Download CV" onclick="event.preventDefault(); showToast('CV Download standard action triggered!');">
+                            <i class="fas fa-download me-1"></i> CV
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right Side: Rounded Photo with Glow -->
+                <div class="col-lg-5 order-1 order-lg-2 text-center">
+                    <div class="profile-img-container">
+                        <div class="profile-glow"></div>
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=800" 
+                             alt="Alex Morgan - Full Stack Developer" 
+                             class="profile-img img-fluid"
+                             onerror="this.src='https://placehold.co/400x400/1e293b/a855f7?text=Alex+Morgan'">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Me Section -->
+    <section id="about" class="py-5 my-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title fw-bold display-6">About Me</h2>
+                <p class="text-muted">Passionate about solving problems through modern software engineering</p>
+            </div>
+
+            <div class="row align-items-center gy-4">
+                <div class="col-lg-6">
+                    <div class="glass-card p-4 p-md-5">
+                        <h3 class="fw-bold mb-3">Engineered for Performance & Scalability</h3>
+                        <p class="text-muted mb-4">
+                            Hello! I'm Alex Morgan, a Senior Full Stack Engineer with 6+ years of experience in designing, building, and maintaining production-grade applications. I thrive at the intersection of powerful backend logic and sleek user interaction.
+                        </p>
+                        <p class="text-muted mb-4">
+                            My core philosophy revolves around clean architecture, test-driven development, and continuous integration. Whether building API gateways or refining UI components, quality is non-negotiable.
+                        </p>
+                        <div class="d-flex gap-3">
+                            <div>
+                                <span class="fw-bold text-gradient fs-5 d-block">Location</span>
+                                <span class="text-muted small">San Francisco, CA (Remote)</span>
+                            </div>
+                            <div class="vr"></div>
+                            <div>
+                                <span class="fw-bold text-gradient fs-5 d-block">Availability</span>
+                                <span class="text-muted small">Open for Opportunities</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Stats Counter Grid -->
+                <div class="col-lg-6">
+                    <div class="row g-3">
+                        <div class="col-sm-6">
+                            <div class="glass-card p-4 stat-card">
+                                <i class="fas fa-code-branch fs-2 text-primary mb-3"></i>
+                                <h3 class="fw-bold display-6 mb-1 counter" data-target="6">0</h3>
+                                <p class="text-muted mb-0">Years Experience</p>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="glass-card p-4 stat-card">
+                                <i class="fas fa-check-circle fs-2 text-info mb-3"></i>
+                                <h3 class="fw-bold display-6 mb-1 counter" data-target="45">0</h3>
+                                <p class="text-muted mb-0">Completed Projects</p>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="glass-card p-4 stat-card">
+                                <i class="fas fa-users fs-2 text-warning mb-3"></i>
+                                <h3 class="fw-bold display-6 mb-1 counter" data-target="28">0</h3>
+                                <p class="text-muted mb-0">Satisfied Clients</p>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="glass-card p-4 stat-card">
+                                <i class="fas fa-layer-group fs-2 text-danger mb-3"></i>
+                                <h3 class="fw-bold display-6 mb-1 counter" data-target="18">0</h3>
+                                <p class="text-muted mb-0">Technologies Mastered</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stack / Skills Section -->
+    <section id="skills" class="py-5 my-5 bg-opacity-50">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title fw-bold display-6">Tech Stack & Mastery</h2>
+                <p class="text-muted">Tools and technologies I use to turn ideas into reality</p>
+            </div>
+
+            <div class="row g-4">
+                <!-- Frontend Card -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="glass-card p-4 h-100 skill-card">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="rounded-3 p-3 bg-primary bg-opacity-10 text-primary me-3">
+                                <i class="fas fa-laptop-code fs-3"></i>
+                            </div>
+                            <h4 class="fw-bold mb-0 fs-5">Frontend</h4>
+                        </div>
+                        <ul class="list-unstyled mb-0">
+                            <li class="mb-3">
+                                <div class="d-flex justify-content-between mb-1">
+                                    <span>React / Next.js</span>
+                                    <span class="text-muted">95%</span>
+                                </div>
+                                <div class="progress" style="height: 6px;">
+                                    <div class="progress-bar bg-primary" role="progressbar" style="width: 95%"></div>
+                                </div>
+                            </li>
+                            <li class="mb-3">
+                                <div class="d-flex justify-content-between mb-1">
+                                    <span>TypeScript</span>
+                                    <span class="text-muted">90%</span>
+                                </div>
+                                <div class="progress" style="height: 6px;">
+                                    <div class="progress-bar bg-primary" role="progressbar" style="width: 90%"></div>
+                                </div>
+                            </li>
+                            <li class="mb-3">
+                                <div class="d-flex justify-content-between mb-1">
+                                    <span>Vue.js</span>
+                                    <span class="text-muted">80%</span>
+                                </div>
+                                <div class="progress" style="height: 6px;">
+                                    <div class="progress-bar bg-primary" role="progressbar" style="width: 80%"></div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="d-flex justify-content-between mb-1">
+                                    <span>Tailwind / Bootstrap</span>
+                                    <span class="text-muted">95%</span>
+                                </div>
+                                <div class="progress" style="height: 6px;">
+                                    <div class="progress-bar bg-primary" role="progressbar" style="width: 95%"></div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Backend Card -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="glass-card p-4 h-100 skill-card">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="rounded-3 p-3 bg-info bg-opacity-10 text-info me-3">
+                                <i class="fas fa-server fs-3"></i>
+                            </div>
+                            <h4 class="fw-bold mb-0 fs-5">Backend</h4>
+                        </div>
+                        <ul class="list-unstyled mb-0">
+                            <li class="mb-3">
+                                <div class="d-flex justify-content-between mb-1">
+                                    <span>Node.js / Express</span>
+                                    <span class="text-muted">92%</span>
+                                </div>
+                                <div class="progress" style="height: 6px;">
+                                    <div class="progress-bar bg-info" role="progressbar" style="width: 92%"></div>
+                                </div>
+                            </li>
+                            <li class="mb-3">
+                                <div class="d-flex justify-content-between mb-1">
+                                    <span>Python / Django</span>
+                                    <span class="text-muted">85%</span>
+                                </div>
+                                <div class="progress" style="height: 6px;">
+                                    <div class="progress-bar bg-info" role="progressbar" style="width: 85%"></div>
+                                </div>
+                            </li>
+                            <li class="mb-3">
+                                <div class="d-flex justify-content-between mb-1">
+                                    <span>Go (Golang)</span>
+                                    <span class="text-muted">75%</span>
+                                </div>
+                                <div class="progress" style="height: 6px;">
+                                    <div class="progress-bar bg-info" role="progressbar" style="width: 75%"></div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="d-flex justify-content-between mb-1">
+                                    <span>GraphQL / REST</span>
+                                    <span class="text-muted">90%</span>
+                                </div>
+                                <div class="progress" style="height: 6px;">
+                                    <div class="progress-bar bg-info" role="progressbar" style="width: 90%"></div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Database Card -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="glass-card p-4 h-100 skill-card">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="rounded-3 p-3 bg-warning bg-opacity-10 text-warning me-3">
+                                <i class="fas fa-database fs-3"></i>
+                            </div>
+                            <h4 class="fw-bold mb-0 fs-5">Database</h4>
+                        </div>
+                        <ul class="list-unstyled mb-0">
+                            <li class="mb-3">
+                                <div class="d-flex justify-content-between mb-1">
+                                    <span>PostgreSQL</span>
+                                    <span class="text-muted">90%</span>
+                                </div>
+                                <div class="progress" style="height: 6px;">
+                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 90%"></div>
+                                </div>
+                            </li>
+                            <li class="mb-3">
+                                <div class="d-flex justify-content-between mb-1">
+                                    <span>MongoDB</span>
+                                    <span class="text-muted">88%</span>
+                                </div>
+                                <div class="progress" style="height: 6px;">
+                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 88%"></div>
+                                </div>
+                            </li>
+                            <li class="mb-3">
+                                <div class="d-flex justify-content-between mb-1">
+                                    <span>Redis Cache</span>
+                                    <span class="text-muted">82%</span>
+                                </div>
+                                <div class="progress" style="height: 6px;">
+                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 82%"></div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="d-flex justify-content-between mb-1">
+                                    <span>Prisma / TypeORM</span>
+                                    <span class="text-muted">85%</span>
+                                </div>
+                                <div class="progress" style="height: 6px;">
+                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 85%"></div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- DevOps & Tools Card -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="glass-card p-4 h-100 skill-card">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="rounded-3 p-3 bg-danger bg-opacity-10 text-danger me-3">
+                                <i class="fas fa-cloud fs-3"></i>
+                            </div>
+                            <h4 class="fw-bold mb-0 fs-5">DevOps & Cloud</h4>
+                        </div>
+                        <ul class="list-unstyled mb-0">
+                            <li class="mb-3">
+                                <div class="d-flex justify-content-between mb-1">
+                                    <span>Docker / Kubernetes</span>
+                                    <span class="text-muted">85%</span>
+                                </div>
+                                <div class="progress" style="height: 6px;">
+                                    <div class="progress-bar bg-danger" role="progressbar" style="width: 85%"></div>
+                                </div>
+                            </li>
+                            <li class="mb-3">
+                                <div class="d-flex justify-content-between mb-1">
+                                    <span>AWS (S3, EC2, Lambda)</span>
+                                    <span class="text-muted">80%</span>
+                                </div>
+                                <div class="progress" style="height: 6px;">
+                                    <div class="progress-bar bg-danger" role="progressbar" style="width: 80%"></div>
+                                </div>
+                            </li>
+                            <li class="mb-3">
+                                <div class="d-flex justify-content-between mb-1">
+                                    <span>GitHub Actions / CI</span>
+                                    <span class="text-muted">88%</span>
+                                </div>
+                                <div class="progress" style="height: 6px;">
+                                    <div class="progress-bar bg-danger" role="progressbar" style="width: 88%"></div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="d-flex justify-content-between mb-1">
+                                    <span>Linux / Nginx</span>
+                                    <span class="text-muted">90%</span>
+                                </div>
+                                <div class="progress" style="height: 6px;">
+                                    <div class="progress-bar bg-danger" role="progressbar" style="width: 90%"></div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Portfolio Section -->
+    <section id="projects" class="py-5 my-5">
+        <div class="container">
+            <div class="text-center mb-4">
+                <h2 class="section-title fw-bold display-6">Featured Projects</h2>
+                <p class="text-muted">Explore a selection of recent web applications and software solutions</p>
+            </div>
+
+            <!-- Filter Tabs -->
+            <div class="d-flex justify-content-center flex-wrap gap-2 mb-5" id="projectFilters">
+                <button class="filter-btn active" data-filter="all">All Projects</button>
+                <button class="filter-btn" data-filter="fullstack">Full Stack</button>
+                <button class="filter-btn" data-filter="frontend">Frontend UI</button>
+                <button class="filter-btn" data-filter="api">API & Microservices</button>
+            </div>
+
+            <!-- Project Cards Grid -->
+            <div class="row g-4" id="projectsGrid">
+                
+                <!-- Project 1 -->
+                <div class="col-md-6 col-lg-4 project-item" data-category="fullstack">
+                    <div class="glass-card project-card h-100">
+                        <div class="project-img-wrapper">
+                            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800" alt="SaaS Dashboard" onerror="this.src='https://placehold.co/600x400/1e293b/06b6d4?text=SaaS+Analytics'">
+                            <div class="project-overlay">
+                                <button class="btn btn-sm btn-light rounded-circle p-2" onclick="openProjectModal('Nexus Analytics Platform', 'A real-time SaaS dashboard for enterprise data visualization, featuring custom metrics and automated reporting.', ['React', 'Node.js', 'PostgreSQL', 'Tailwind'], 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=800')">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <a href="https://github.com" target="_blank" class="btn btn-sm btn-light rounded-circle p-2">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <div class="d-flex gap-2 mb-2">
+                                <span class="badge bg-primary bg-opacity-20 text-primary">React</span>
+                                <span class="badge bg-info bg-opacity-20 text-info">Node.js</span>
+                                <span class="badge bg-warning bg-opacity-20 text-warning">PostgreSQL</span>
+                            </div>
+                            <h4 class="fw-bold fs-5 mb-2">Nexus SaaS Analytics</h4>
+                            <p class="text-muted small mb-3">Enterprise analytics platform offering real-time streaming charts and automated PDF alerts.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="col-md-6 col-lg-4 project-item" data-category="frontend">
+                    <div class="glass-card project-card h-100">
+                        <div class="project-img-wrapper">
+                            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800" alt="E-Commerce App" onerror="this.src='https://placehold.co/600x400/1e293b/8b5cf6?text=E-Commerce+Store'">
+                            <div class="project-overlay">
+                                <button class="btn btn-sm btn-light rounded-circle p-2" onclick="openProjectModal('Aura Fashion Hub', 'Modern e-commerce storefront crafted with Next.js, featuring seamless cart interactions and Stripe checkout.', ['Next.js', 'Stripe', 'Tailwind CSS'], 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800')">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <a href="https://github.com" target="_blank" class="btn btn-sm btn-light rounded-circle p-2">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <div class="d-flex gap-2 mb-2">
+                                <span class="badge bg-primary bg-opacity-20 text-primary">Next.js</span>
+                                <span class="badge bg-danger bg-opacity-20 text-danger">Stripe</span>
+                            </div>
+                            <h4 class="fw-bold fs-5 mb-2">Aura E-Commerce Hub</h4>
+                            <p class="text-muted small mb-3">High-converting online store built with headless commerce architecture and fluid animations.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="col-md-6 col-lg-4 project-item" data-category="api">
+                    <div class="glass-card project-card h-100">
+                        <div class="project-img-wrapper">
+                            <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&q=80&w=800" alt="Microservices Gateway" onerror="this.src='https://placehold.co/600x400/1e293b/ec4899?text=API+Gateway'">
+                            <div class="project-overlay">
+                                <button class="btn btn-sm btn-light rounded-circle p-2" onclick="openProjectModal('KubeAuth Microservice', 'Scalable distributed auth gateway in Go & Redis capable of handling 50k requests/sec.', ['Go', 'Redis', 'Docker', 'Kubernetes'], 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&q=80&w=800')">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <a href="https://github.com" target="_blank" class="btn btn-sm btn-light rounded-circle p-2">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <div class="d-flex gap-2 mb-2">
+                                <span class="badge bg-info bg-opacity-20 text-info">Go</span>
+                                <span class="badge bg-warning bg-opacity-20 text-warning">Redis</span>
+                                <span class="badge bg-danger bg-opacity-20 text-danger">Docker</span>
+                            </div>
+                            <h4 class="fw-bold fs-5 mb-2">KubeAuth Gateway</h4>
+                            <p class="text-muted small mb-3">Ultra-low latency authentication microservice supporting OAuth2 and JWT token rotation.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 4 -->
+                <div class="col-md-6 col-lg-4 project-item" data-category="fullstack">
+                    <div class="glass-card project-card h-100">
+                        <div class="project-img-wrapper">
+                            <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=800" alt="AI Workspace" onerror="this.src='https://placehold.co/600x400/1e293b/a855f7?text=AI+Assistant'">
+                            <div class="project-overlay">
+                                <button class="btn btn-sm btn-light rounded-circle p-2" onclick="openProjectModal('Cognitive AI Studio', 'Generative AI content tool leveraging OpenAI APIs with custom prompt management.', ['Python', 'FastAPI', 'Vue 3', 'MongoDB'], 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=800')">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <a href="https://github.com" target="_blank" class="btn btn-sm btn-light rounded-circle p-2">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <div class="d-flex gap-2 mb-2">
+                                <span class="badge bg-success bg-opacity-20 text-success">Python</span>
+                                <span class="badge bg-primary bg-opacity-20 text-primary">Vue 3</span>
+                                <span class="badge bg-warning bg-opacity-20 text-warning">MongoDB</span>
+                            </div>
+                            <h4 class="fw-bold fs-5 mb-2">Cognitive AI Studio</h4>
+                            <p class="text-muted small mb-3">AI creation suite offering smart code completion and automated Markdown synthesis.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience / Career Timeline Section -->
+    <section id="experience" class="py-5 my-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title fw-bold display-6">Experience History</h2>
+                <p class="text-muted">My journey through roles and tech leadership</p>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-lg-9">
+                    <div class="timeline-container">
+                        
+                        <!-- Timeline Item 1 -->
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="glass-card p-4">
+                                <div class="d-flex flex-wrap justify-content-between align-items-center mb-2">
+                                    <h4 class="fw-bold mb-0">Lead Full Stack Engineer</h4>
+                                    <span class="badge bg-primary bg-opacity-20 text-primary font-mono">2022 - Present</span>
+                                </div>
+                                <h6 class="text-gradient fw-semibold mb-3">Vortex Digital Corp</h6>
+                                <p class="text-muted mb-3">
+                                    Spearheaded a team of 8 engineers delivering enterprise micro-frontends. Reduced bundle load time by 42% and implemented Dockerized CI/CD automated deployments.
+                                </p>
+                                <div class="d-flex flex-wrap gap-2">
+                                    <span class="badge bg-secondary bg-opacity-20 text-muted">React</span>
+                                    <span class="badge bg-secondary bg-opacity-20 text-muted">Node.js</span>
+                                    <span class="badge bg-secondary bg-opacity-20 text-muted">AWS</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Timeline Item 2 -->
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="glass-card p-4">
+                                <div class="d-flex flex-wrap justify-content-between align-items-center mb-2">
+                                    <h4 class="fw-bold mb-0">Backend Developer</h4>
+                                    <span class="badge bg-primary bg-opacity-20 text-primary font-mono">2020 - 2022</span>
+                                </div>
+                                <h6 class="text-gradient fw-semibold mb-3">CloudScale Labs</h6>
+                                <p class="text-muted mb-3">
+                                    Designed scalable RESTful & GraphQL APIs serving 1M+ daily active users. Migrated legacy databases to PostgreSQL with zero downtime.
+                                </p>
+                                <div class="d-flex flex-wrap gap-2">
+                                    <span class="badge bg-secondary bg-opacity-20 text-muted">Python</span>
+                                    <span class="badge bg-secondary bg-opacity-20 text-muted">PostgreSQL</span>
+                                    <span class="badge bg-secondary bg-opacity-20 text-muted">Redis</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Timeline Item 3 -->
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="glass-card p-4">
+                                <div class="d-flex flex-wrap justify-content-between align-items-center mb-2">
+                                    <h4 class="fw-bold mb-0">Frontend Web Developer</h4>
+                                    <span class="badge bg-primary bg-opacity-20 text-primary font-mono">2018 - 2020</span>
+                                </div>
+                                <h6 class="text-gradient fw-semibold mb-3">PixelCraft Studio</h6>
+                                <p class="text-muted mb-3">
+                                    Developed responsive web interfaces for fintech clients. Collaborated closely with UI designers to build accessible component libraries.
+                                </p>
+                                <div class="d-flex flex-wrap gap-2">
+                                    <span class="badge bg-secondary bg-opacity-20 text-muted">Vue.js</span>
+                                    <span class="badge bg-secondary bg-opacity-20 text-muted">JavaScript</span>
+                                    <span class="badge bg-secondary bg-opacity-20 text-muted">Sass</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-5 my-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title fw-bold display-6">Get In Touch</h2>
+                <p class="text-muted">Have a project in mind or want to talk tech? Let's connect!</p>
+            </div>
+
+            <div class="row g-4">
+                <!-- Contact Info Cards -->
+                <div class="col-lg-5">
+                    <div class="d-flex flex-column gap-3">
+                        
+                        <div class="glass-card p-4 d-flex align-items-center">
+                            <div class="rounded-circle p-3 bg-primary bg-opacity-10 text-primary me-3">
+                                <i class="fas fa-envelope fs-4"></i>
+                            </div>
+                            <div>
+                                <span class="text-muted small d-block">Direct Email</span>
+                                <a href="mailto:alex.morgan@example.com" class="fw-bold text-main text-decoration-none">alex.morgan@example.com</a>
+                            </div>
+                        </div>
+
+                        <div class="glass-card p-4 d-flex align-items-center">
+                            <div class="rounded-circle p-3 bg-info bg-opacity-10 text-info me-3">
+                                <i class="fab fa-github fs-4"></i>
+                            </div>
+                            <div>
+                                <span class="text-muted small d-block">GitHub Profile</span>
+                                <a href="https://github.com" target="_blank" class="fw-bold text-main text-decoration-none">github.com/alexmorgan-dev</a>
+                            </div>
+                        </div>
+
+                        <div class="glass-card p-4 d-flex align-items-center">
+                            <div class="rounded-circle p-3 bg-warning bg-opacity-10 text-warning me-3">
+                                <i class="fab fa-linkedin fs-4"></i>
+                            </div>
+                            <div>
+                                <span class="text-muted small d-block">LinkedIn Network</span>
+                                <a href="https://linkedin.com" target="_blank" class="fw-bold text-main text-decoration-none">linkedin.com/in/alexmorgan</a>
+                            </div>
+                        </div>
+
+                        <div class="glass-card p-4 d-flex align-items-center">
+                            <div class="rounded-circle p-3 bg-danger bg-opacity-10 text-danger me-3">
+                                <i class="fas fa-map-marker-alt fs-4"></i>
+                            </div>
+                            <div>
+                                <span class="text-muted small d-block">Location</span>
+                                <span class="fw-bold text-main">San Francisco, California</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="col-lg-7">
+                    <div class="glass-card p-4 p-md-5">
+                        <form id="contactForm" onsubmit="handleContactSubmit(event)">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="name" class="form-label text-muted small fw-semibold">Your Name</label>
+                                    <input type="text" class="form-control bg-transparent text-main border-secondary" id="name" placeholder="John Doe" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="email" class="form-label text-muted small fw-semibold">Your Email</label>
+                                    <input type="email" class="form-control bg-transparent text-main border-secondary" id="email" placeholder="john@example.com" required>
+                                </div>
+                                <div class="col-12">
+                                    <label for="subject" class="form-label text-muted small fw-semibold">Subject</label>
+                                    <input type="text" class="form-control bg-transparent text-main border-secondary" id="subject" placeholder="Project Inquiry" required>
+                                </div>
+                                <div class="col-12">
+                                    <label for="message" class="form-label text-muted small fw-semibold">Message</label>
+                                    <textarea class="form-control bg-transparent text-main border-secondary" id="message" rows="4" placeholder="Hello Alex, I'd like to talk about..." required></textarea>
+                                </div>
+                                <div class="col-12 mt-4">
+                                    <button type="submit" class="btn btn-gradient w-100 py-3 rounded-3">
+                                        <i class="fas fa-paper-plane me-2"></i>Send Message
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-4 border-top border-secondary border-opacity-25 mt-5">
+        <div class="container text-center">
+            <p class="text-muted small mb-0">
+                &copy; 2026 Alex Morgan. Built with HTML5, CSS3, JS & Bootstrap 5.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Interactive Project Details Modal -->
+    <div class="modal fade" id="projectModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content glass-card text-main border-0">
+                <div class="modal-header border-bottom border-secondary border-opacity-25">
+                    <h5 class="modal-title fw-bold" id="modalTitle">Project Title</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <img id="modalImg" src="" class="img-fluid rounded-3 mb-3 w-100 style-img" style="height:280px; object-fit:cover;" alt="Project Detail">
+                    <p id="modalDesc" class="text-muted"></p>
+                    <div class="mb-3">
+                        <span class="fw-semibold d-block mb-2">Technologies Used:</span>
+                        <div id="modalBadges" class="d-flex flex-wrap gap-2"></div>
+                    </div>
+                </div>
+                <div class="modal-footer border-top border-secondary border-opacity-25">
+                    <button type="button" class="btn btn-outline-custom" data-bs-dismiss="modal">Close</button>
+                    <a href="https://github.com" target="_blank" class="btn btn-gradient">
+                        <i class="fas fa-external-link-alt me-1"></i> Live Demo
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1100;">
+        <div id="liveToast" class="toast glass-card text-main border-0" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-body d-flex align-items-center justify-content-between p-3">
+                <span id="toastMessage">Action completed!</span>
+                <button type="button" class="btn-close btn-close-white ms-2" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom Application Logic -->
+    <script>
+        // --- 1. Dynamic Typed Text Effect ---
+        const words = ["Node.js & React", "Cloud Architectures", "Modern UI/UX", "Python Systems"];
+        let wordIdx = 0;
+        let charIdx = 0;
+        let isDeleting = false;
+        const typedTarget = document.getElementById('typedText');
+
+        function typeEffect() {
+            const currentWord = words[wordIdx];
+            if (isDeleting) {
+                charIdx--;
+                typedTarget.textContent = currentWord.substring(0, charIdx);
+            } else {
+                charIdx++;
+                typedTarget.textContent = currentWord.substring(0, charIdx);
+            }
+
+            let typeSpeed = isDeleting ? 40 : 80;
+
+            if (!isDeleting && charIdx === currentWord.length) {
+                typeSpeed = 2000; // Pause at end
+                isDeleting = true;
+            } else if (isDeleting && charIdx === 0) {
+                isDeleting = false;
+                wordIdx = (wordIdx + 1) % words.length;
+                typeSpeed = 500;
+            }
+
+            setTimeout(typeEffect, typeSpeed);
+        }
+
+        // --- 2. Theme Switcher (Dark / Light) ---
+        const themeToggleBtn = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const htmlElem = document.documentElement;
+
+        themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = htmlElem.getAttribute('data-bs-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            htmlElem.setAttribute('data-bs-theme', newTheme);
+            
+            themeIcon.className = newTheme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+            showToast(`Switched to ${newTheme} mode`);
+        });
+
+        // --- 3. Animated Counter for Stats ---
+        function animateCounters() {
+            const counters = document.querySelectorAll('.counter');
+            counters.forEach(counter => {
+                const target = +counter.getAttribute('data-target');
+                let count = 0;
+                const speed = target / 30; // speed step
+
+                const updateCount = () => {
+                    count += speed;
+                    if (count < target) {
+                        counter.innerText = Math.ceil(count);
+                        setTimeout(updateCount, 40);
+                    } else {
+                        counter.innerText = target + "+";
+                    }
+                };
+                updateCount();
+            });
+        }
+
+        // Intersection Observer for triggering counters when visible
+        let counterTriggered = false;
+        const aboutSection = document.getElementById('about');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !counterTriggered) {
+                    animateCounters();
+                    counterTriggered = true;
+                }
+            });
+        }, { threshold: 0.3 });
+
+        if (aboutSection) observer.observe(aboutSection);
+
+        // --- 4. Portfolio Filter Buttons ---
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const projectItems = document.querySelectorAll('.project-item');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const filter = btn.getAttribute('data-filter');
+
+                projectItems.forEach(item => {
+                    if (filter === 'all' || item.getAttribute('data-category') === filter) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // --- 5. Project Modal Handler ---
+        function openProjectModal(title, desc, badges, imgUrl) {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalDesc').innerText = desc;
+            document.getElementById('modalImg').src = imgUrl;
+
+            const badgeContainer = document.getElementById('modalBadges');
+            badgeContainer.innerHTML = '';
+            badges.forEach(b => {
+                const span = document.createElement('span');
+                span.className = 'badge bg-primary bg-opacity-20 text-primary';
+                span.innerText = b;
+                badgeContainer.appendChild(span);
+            });
+
+            const modal = new bootstrap.Modal(document.getElementById('projectModal'));
+            modal.show();
+        }
+
+        // --- 6. Form Submission Simulation ---
+        function handleContactSubmit(event) {
+            event.preventDefault();
+            showToast('Thank you! Your message has been sent.');
+            document.getElementById('contactForm').reset();
+        }
+
+        // --- 7. Toast Notification Utility ---
+        function showToast(msg) {
+            const toastElem = document.getElementById('liveToast');
+            document.getElementById('toastMessage').innerText = msg;
+            const toast = new bootstrap.Toast(toastElem);
+            toast.show();
+        }
+
+        // Start initialization on window load
+        window.onload = function() {
+            typeEffect();
+        };
+    </script>
+</body>
+</html>
